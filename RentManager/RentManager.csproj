@@ -9,8 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Data\" />
-    <Folder Include="Views\" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="10.0.2" />
   </ItemGroup>
 
 </Project>

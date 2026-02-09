@@ -4,9 +4,8 @@ using System.IO;
 
 namespace RentManager.Data
 {
-    /// Clase estática encargada de gestionar la base de datos SQLite.
-    /// Se ocupa de crear la base de datos, las tablas necesarias
-    /// y de inicializar los datos básicos del sistema.
+    /// Clase encargada de gestionar la base de datos SQLite.
+    /// Se ocupa de crear la base de datos, las tablas necesarias y de inicializar los datos básicos del sistema.
     public static class Db
     {
         // Carpeta donde se almacenará la base de datos dentro del directorio del usuario
