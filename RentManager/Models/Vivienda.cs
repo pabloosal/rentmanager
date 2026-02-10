@@ -2,7 +2,7 @@
 
 namespace RentManager.Models
 {
-    // Representa una vivienda gestionada en la aplicación
+    // Representa una vivienda de la aplicación
     public class Vivienda
     {
         public int IdVivienda { get; set; }
