@@ -1,25 +1,50 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
+using RentManager.Views;
 
-namespace RentManager.Views
+namespace RentManager
 {
-    /// <summary>
-    /// Lógica de interacción para MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void BtnViviendas_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Aquí irá Gestión de Viviendas");
+        }
+
+        private void BtnInquilinos_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Aquí irá Gestión de Inquilinos");
+        }
+
+        private void BtnContratos_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Aquí irá Gestión de Contratos");
+        }
+
+        private void BtnPagos_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Aquí irá Gestión de Pagos");
+        }
+
+        private void BtnGastos_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Aquí irá Gestión de Gastos");
+        }
+
+        private void BtnIncidencias_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Aquí irá Gestión de Incidencias");
+        }
+
+        private void BtnLogout_Click(object sender, RoutedEventArgs e)
+        {
+            // Cierra la ventana principal y vuelve al login
+            new Login().Show();
+            Close();
         }
     }
 }

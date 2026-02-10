@@ -1,12 +1,41 @@
-﻿<Window x:Class="RentManager.Views.MainWindow"
+﻿<Window x:Class="RentManager.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:RentManager.Views"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="RentManager"
+        Height="600" Width="1000"
+        WindowStartupLocation="CenterScreen">
+
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="220"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Menú lateral -->
+        <Border Grid.Column="0" Background= "LightGray">
+            <StackPanel Margin="10">
+                <TextBlock Text="RentManager"
+                           Foreground="Black"
+                           FontSize="22"
+                           FontWeight="Bold"
+                           Margin="10,10,10,20"/>
+
+                <Button Content="Viviendas" Click="BtnViviendas_Click" Margin="0,0,0,8"/>
+                <Button Content="Inquilinos" Click="BtnInquilinos_Click" Margin="0,0,0,8"/>
+                <Button Content="Contratos" Click="BtnContratos_Click" Margin="0,0,0,8"/>
+                <Button Content="Pagos" Click="BtnPagos_Click" Margin="0,0,0,8"/>
+                <Button Content="Gastos" Click="BtnGastos_Click" Margin="0,0,0,8"/>
+                <Button Content="Incidencias" Click="BtnIncidencias_Click" Margin="0,0,0,8"/>
+
+                <Separator Margin="0,15,0,15"/>
+
+                <Button Content="Cerrar sesión" Click="BtnLogout_Click"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Contenido -->
+        <Grid Grid.Column="1" Background="#F3F3F3">
+            <ContentControl x:Name="MainContent" Margin="15"/>
+        </Grid>
     </Grid>
 </Window>
