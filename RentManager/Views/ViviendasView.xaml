@@ -1,0 +1,106 @@
+﻿<UserControl x:Class="RentManager.Views.ViviendasView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <UserControl.Resources>
+        <!-- Estilo base para botones -->
+        <Style x:Key="ActionButtonStyle" TargetType="Button">
+            <Setter Property="Height" Value="32"/>
+            <Setter Property="Padding" Value="14,0"/>
+            <Setter Property="Margin" Value="0,0,10,0"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#D0D0D0"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+
+        <!-- Botón “principal” -->
+        <Style x:Key="PrimaryButtonStyle" TargetType="Button" BasedOn="{StaticResource ActionButtonStyle}">
+            <Setter Property="Background" Value="#2D6CDF"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#2D6CDF"/>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Título -->
+        <TextBlock Grid.Row="0"
+                   Text="Gestión de Viviendas"
+                   FontSize="22"
+                   FontWeight="Bold"
+                   Margin="0,0,0,10"/>
+
+        <!-- Barra de acciones (debajo del título) -->
+        <Border Grid.Row="1"
+                Background="White"
+                BorderBrush="#E2E2E2"
+                BorderThickness="1"
+                CornerRadius="8"
+                Padding="12"
+                Margin="0,0,0,12">
+
+            <DockPanel LastChildFill="False">
+                <TextBox Name="txtBuscar"                         
+                         Width="260"
+                         Height="32"
+                         Margin="0,0,12,0"
+                         VerticalContentAlignment="Center"
+                         ToolTip="Búsqueda (opcional)"
+                         Text=""
+                         DockPanel.Dock="Left"/>
+                
+                <Button Content="Buscar"
+                        Style="{StaticResource ActionButtonStyle}"
+                        Click="BtnBuscar_Click"/>    
+
+                <StackPanel Orientation="Horizontal" DockPanel.Dock="Right">                    
+                    <Button Content="Añadir"
+                            Style="{StaticResource PrimaryButtonStyle}"
+                            Click="BtnAñadir_Click"/>
+
+                    <Button Content="Editar"
+                            Style="{StaticResource ActionButtonStyle}"
+                            Click="BtnEditar_Click"/>
+
+                    <Button Content="Eliminar"
+                            Style="{StaticResource ActionButtonStyle}"
+                            Click="BtnEliminar_Click"/>
+                </StackPanel>
+            </DockPanel>
+        </Border>
+
+        <!-- Tabla -->
+        <Border Grid.Row="2"
+                Background="White"
+                BorderBrush="#E2E2E2"
+                BorderThickness="1"
+                CornerRadius="8"
+                Padding="8">
+
+            <DataGrid x:Name="dgViviendas"
+                      AutoGenerateColumns="False"
+                      IsReadOnly="True"
+                      SelectionMode="Single"
+                      GridLinesVisibility="None"
+                      HeadersVisibility="Column"
+                      RowHeaderWidth="0"
+                      CanUserAddRows="False">
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Dirección" Binding="{Binding Direccion}" Width="2*"/>
+                    <DataGridTextColumn Header="Ciudad" Binding="{Binding Ciudad}" Width="*"/>
+                    <DataGridTextColumn Header="CP" Binding="{Binding CodigoPostal}" Width="*"/>
+                    <DataGridTextColumn Header="Precio" Binding="{Binding PrecioMensual}" Width="*"/>
+                    <DataGridTextColumn Header="Estado" Binding="{Binding Estado}" Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
+    </Grid>
+</UserControl>

@@ -1,0 +1,86 @@
+﻿<Window x:Class="RentManager.Views.ViviendaForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Vivienda"
+        Height="520" Width="430"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock x:Name="txtTitulo"
+                   Text="Nueva vivienda"
+                   FontSize="20"
+                   FontWeight="Bold"
+                   Margin="0,0,0,18"/>
+
+        <!-- Formulario -->
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <!-- Dirección label -->
+                <RowDefinition Height="Auto"/>
+                <!-- Dirección input -->
+                <RowDefinition Height="Auto"/>
+                <!-- Ciudad label -->
+                <RowDefinition Height="Auto"/>
+                <!-- Ciudad input -->
+                <RowDefinition Height="Auto"/>
+                <!-- CP label -->
+                <RowDefinition Height="Auto"/>
+                <!-- CP input -->
+                <RowDefinition Height="Auto"/>
+                <!-- Precio label -->
+                <RowDefinition Height="Auto"/>
+                <!-- Precio input -->
+                <RowDefinition Height="Auto"/>
+                <!-- Estado label -->
+                <RowDefinition Height="Auto"/>
+                <!-- Estado input -->
+                <RowDefinition Height="Auto"/>
+                <!-- Observaciones label -->
+                <RowDefinition Height="Auto"/>
+                <!-- Observaciones input -->
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="Dirección"/>
+            <TextBox x:Name="txtDireccion" Grid.Row="1" Margin="0,0,0,10"/>
+
+            <TextBlock Text="Ciudad" Grid.Row="2"/>
+            <TextBox x:Name="txtCiudad" Grid.Row="3" Margin="0,0,0,10"/>
+
+            <TextBlock Text="Código postal" Grid.Row="4"/>
+            <TextBox x:Name="txtCodigoPostal" Grid.Row="5" Margin="0,0,0,10"/>
+
+            <TextBlock Text="Precio mensual" Grid.Row="6"/>
+            <TextBox x:Name="txtPrecio" Grid.Row="7" Margin="0,0,0,10"/>
+
+            <TextBlock Text="Estado" Grid.Row="8"/>
+            <ComboBox x:Name="cmbEstado" Grid.Row="9" Margin="0,0,0,10">
+                <ComboBoxItem Content="Libre"/>
+                <ComboBoxItem Content="Alquilada"/>
+            </ComboBox>
+
+            <TextBlock Text="Observaciones" Grid.Row="10"/>
+            <TextBox x:Name="txtObservaciones"
+                     Grid.Row="11"
+                     Height="70"
+                     TextWrapping="Wrap"
+                     AcceptsReturn="True"/>
+        </Grid>
+
+        <!-- Botonera -->
+        <StackPanel Grid.Row="2"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    Margin="0,18,0,0">
+            <Button Content="Cancelar" Click="BtnCancelar_Click" Margin="0,0,10,0" MinWidth="90"/>
+            <Button Content="Guardar" Click="BtnGuardar_Click" MinWidth="90"/>
+        </StackPanel>
+    </Grid>
+</Window>

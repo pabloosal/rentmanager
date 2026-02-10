@@ -12,7 +12,7 @@ namespace RentManager
 
         private void BtnViviendas_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Aquí irá Gestión de Viviendas");
+            MainContent.Content = new ViviendasView();
         }
 
         private void BtnInquilinos_Click(object sender, RoutedEventArgs e)
