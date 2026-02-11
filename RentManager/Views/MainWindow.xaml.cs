@@ -17,7 +17,7 @@ namespace RentManager
 
         private void BtnInquilinos_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Aquí irá Gestión de Inquilinos");
+            MainContent.Content = new InquilinosView();
         }
 
         private void BtnContratos_Click(object sender, RoutedEventArgs e)
