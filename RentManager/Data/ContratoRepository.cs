@@ -235,6 +235,46 @@ namespace RentManager.Data
             return result > 0;
         }
 
+        // Devuelve contratos para cargar en un ComboBox (dirección + inquilino)
+        public List<ContratoComboItem> ObtenerParaCombo()
+        {
+            var lista = new List<ContratoComboItem>();
+
+            using var connection = new SqliteConnection(Db.ConnectionString);
+            connection.Open();
+
+            using (var pragma = connection.CreateCommand())
+            {
+                pragma.CommandText = "PRAGMA foreign_keys = ON;";
+                pragma.ExecuteNonQuery();
+            }
+
+            var query = @"
+                SELECT
+                    c.id_contrato,
+                    (v.direccion || ' — ' || i.nombre || ' ' || i.apellidos) AS texto
+                FROM Contrato c
+                JOIN Vivienda v ON c.id_vivienda = v.id_vivienda
+                JOIN Inquilino i ON c.id_inquilino = i.id_inquilino
+                ORDER BY c.id_contrato DESC;
+            ";
+
+            using var cmd = connection.CreateCommand();
+            cmd.CommandText = query;
+
+            using var reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                lista.Add(new ContratoComboItem
+                {
+                    IdContrato = reader.GetInt32(0),
+                    Texto = reader.GetString(1)
+                });
+            }
+
+            return lista;
+        }
+
 
     }
 }

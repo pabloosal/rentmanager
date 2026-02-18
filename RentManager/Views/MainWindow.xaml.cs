@@ -27,7 +27,7 @@ namespace RentManager
 
         private void BtnPagos_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Aquí irá Gestión de Pagos");
+            MainContent.Content = new PagosView();
         }
 
         private void BtnGastos_Click(object sender, RoutedEventArgs e)
