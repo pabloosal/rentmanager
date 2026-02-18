@@ -57,7 +57,10 @@ namespace RentManager.Data
 
             //Crear tabla contrato si no existe
             CrearTablaContrato(connection);
-            InsertarContratoEjemplo(connection); 
+            InsertarContratoEjemplo(connection);
+
+            // Crear tabla Pago si no existe
+            CrearTablaPago(connection);
         }
 
         // Crea la tabla Usuario si no existe
@@ -201,16 +204,40 @@ namespace RentManager.Data
             750,
             'Activo',
             'Contrato de ejemplo'
-        WHERE 
-            (SELECT COUNT(*) FROM Contrato) = 0
-            AND (SELECT COUNT(*) FROM Vivienda) > 0
-            AND (SELECT COUNT(*) FROM Inquilino) > 0;
-    ";
+                WHERE 
+                    (SELECT COUNT(*) FROM Contrato) = 0
+                    AND (SELECT COUNT(*) FROM Vivienda) > 0
+                    AND (SELECT COUNT(*) FROM Inquilino) > 0;
+            ";
 
             using var cmd = connection.CreateCommand();
             cmd.CommandText = sql;
             cmd.ExecuteNonQuery();
         }
+
+        // Crea la tabla Pago si no existe
+        private static void CrearTablaPago(SqliteConnection connection)
+        {
+            var sql = @"
+        CREATE TABLE IF NOT EXISTS Pago (
+            id_pago     INTEGER PRIMARY KEY AUTOINCREMENT,
+            id_contrato INTEGER NOT NULL,
+            mes         INTEGER NOT NULL,
+            anyo        INTEGER NOT NULL,
+            importe     REAL NOT NULL,
+            estado      TEXT NOT NULL,
+            fecha_pago  TEXT,
+            observaciones TEXT,
+            FOREIGN KEY (id_contrato) REFERENCES Contrato(id_contrato),
+            UNIQUE (id_contrato, mes, anyo)
+            );
+        ";
+
+            using var cmd = connection.CreateCommand();
+            cmd.CommandText = sql;
+            cmd.ExecuteNonQuery();
+        }
+
 
     }
 }
