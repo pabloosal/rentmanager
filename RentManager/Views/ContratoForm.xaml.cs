@@ -94,6 +94,19 @@ namespace RentManager.Views
                 Observaciones = txtObservaciones.Text.Trim()
             };
 
+            // Regla: no permitir contratos que se solapen en la misma vivienda
+            int? excluirId = _contratoEditar?.IdContrato;
+
+            if (_repoContrato.ExisteSolapamientoContrato(
+                    contrato.IdVivienda,
+                    contrato.FechaInicio,
+                    contrato.FechaFin,
+                    excluirId))
+            {
+                MessageBox.Show("Ya existe un contrato en esa vivienda que se solapa con las fechas indicadas.");
+                return;
+            }
+
             if (_contratoEditar == null)
             {
                 _repoContrato.Insertar(contrato);

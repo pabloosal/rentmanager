@@ -195,5 +195,46 @@ namespace RentManager.Data
 
             cmd.ExecuteNonQuery();
         }
+
+        // Comprueba si existe algún contrato que se solape con las fechas indicadas para una vivienda
+        public bool ExisteSolapamientoContrato(int idVivienda, DateTime nuevoInicio, DateTime? nuevoFin, int? idContratoExcluir = null)
+        {
+            using var connection = new SqliteConnection(Db.ConnectionString);
+            connection.Open();
+
+            using (var pragma = connection.CreateCommand())
+            {
+                pragma.CommandText = "PRAGMA foreign_keys = ON;";
+                pragma.ExecuteNonQuery();
+            }
+
+            // Un contrato existente solapa si:
+            //   existente.inicio <= nuevoFin (o nuevoFin es NULL)
+            //   y existente.fin (o NULL) >= nuevoInicio
+            var query = @"
+                SELECT COUNT(*)
+                FROM Contrato
+                WHERE id_vivienda = @idVivienda
+                  AND (@idExcluir IS NULL OR id_contrato <> @idExcluir)
+                  AND (
+                        fecha_inicio <= COALESCE(@nuevoFin, '9999-12-31T23:59:59')
+                        AND COALESCE(fecha_fin, '9999-12-31T23:59:59') >= @nuevoInicio
+                      );
+            ";
+
+            using var cmd = connection.CreateCommand();
+            cmd.CommandText = query;
+
+            cmd.Parameters.AddWithValue("@idVivienda", idVivienda);
+            cmd.Parameters.AddWithValue("@idExcluir", idContratoExcluir.HasValue ? idContratoExcluir.Value : (object)DBNull.Value);
+
+            cmd.Parameters.AddWithValue("@nuevoInicio", nuevoInicio.ToString("s"));
+            cmd.Parameters.AddWithValue("@nuevoFin", nuevoFin.HasValue ? nuevoFin.Value.ToString("s") : (object)DBNull.Value);
+
+            var result = (long)cmd.ExecuteScalar();
+            return result > 0;
+        }
+
+
     }
 }
