@@ -35,6 +35,13 @@ namespace RentManager.Data
             using var connection = new SqliteConnection(ConnectionString);
             connection.Open();
 
+            // Activa el uso de claves foráneas en SQLite
+            using (var pragma = connection.CreateCommand())
+            {
+                pragma.CommandText = "PRAGMA foreign_keys = ON;";
+                pragma.ExecuteNonQuery();
+            }
+
             // Crear la tabla Usuario si no existe
             // Creación de tablas y datos iniciales
             CrearTablaUsuario(connection);
@@ -47,6 +54,10 @@ namespace RentManager.Data
             // Crear la tabla Inquilino si no existe
             CrearTablaInquilino(connection);
             InsertarInquilinoEjemplo(connection);
+
+            //Crear tabla contrato si no existe
+            CrearTablaContrato(connection);
+            InsertarContratoEjemplo(connection); 
         }
 
         // Crea la tabla Usuario si no existe
@@ -151,5 +162,55 @@ namespace RentManager.Data
             cmd.CommandText = sql;
             cmd.ExecuteNonQuery();
         }
+
+        // Crea la tabla Contrato si no existe
+        private static void CrearTablaContrato(SqliteConnection connection)
+        {
+            var sql = @"
+                CREATE TABLE IF NOT EXISTS Contrato (
+                    id_contrato    INTEGER PRIMARY KEY AUTOINCREMENT,
+                    id_vivienda    INTEGER NOT NULL,
+                    id_inquilino   INTEGER NOT NULL,
+                    fecha_inicio   TEXT NOT NULL,
+                    fecha_fin      TEXT,
+                    renta_mensual  REAL NOT NULL,
+                    fianza         REAL,
+                    estado         TEXT NOT NULL,
+                    observaciones  TEXT,
+                    FOREIGN KEY (id_vivienda) REFERENCES Vivienda(id_vivienda),
+                    FOREIGN KEY (id_inquilino) REFERENCES Inquilino(id_inquilino)
+                );
+            ";
+
+            using var cmd = connection.CreateCommand();
+            cmd.CommandText = sql;
+            cmd.ExecuteNonQuery();
+        }
+
+        // Inserta un contrato de ejemplo si hay datos y no existe ningún contrato
+        private static void InsertarContratoEjemplo(SqliteConnection connection)
+        {
+            var sql = @"
+        INSERT INTO Contrato (id_vivienda, id_inquilino, fecha_inicio, fecha_fin, renta_mensual, fianza, estado, observaciones)
+        SELECT 
+            (SELECT id_vivienda FROM Vivienda ORDER BY id_vivienda ASC LIMIT 1),
+            (SELECT id_inquilino FROM Inquilino ORDER BY id_inquilino ASC LIMIT 1),
+            datetime('now'),
+            NULL,
+            750,
+            750,
+            'Activo',
+            'Contrato de ejemplo'
+        WHERE 
+            (SELECT COUNT(*) FROM Contrato) = 0
+            AND (SELECT COUNT(*) FROM Vivienda) > 0
+            AND (SELECT COUNT(*) FROM Inquilino) > 0;
+    ";
+
+            using var cmd = connection.CreateCommand();
+            cmd.CommandText = sql;
+            cmd.ExecuteNonQuery();
+        }
+
     }
 }

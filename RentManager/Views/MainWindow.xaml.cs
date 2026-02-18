@@ -22,7 +22,7 @@ namespace RentManager
 
         private void BtnContratos_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Aquí irá Gestión de Contratos");
+            MainContent.Content = new ContratosView();
         }
 
         private void BtnPagos_Click(object sender, RoutedEventArgs e)
