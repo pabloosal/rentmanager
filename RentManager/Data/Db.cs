@@ -61,6 +61,9 @@ namespace RentManager.Data
 
             // Crear tabla Pago si no existe
             CrearTablaPago(connection);
+
+            // Crear tabla Incidencia si no existe
+            CrearTablaIncidencia(connection);
         }
 
         // Crea la tabla Usuario si no existe
@@ -232,6 +235,28 @@ namespace RentManager.Data
             UNIQUE (id_contrato, mes, anyo)
             );
         ";
+
+            using var cmd = connection.CreateCommand();
+            cmd.CommandText = sql;
+            cmd.ExecuteNonQuery();
+        }
+
+        // Crea la tabla Incidencia si no existe
+        private static void CrearTablaIncidencia(SqliteConnection connection)
+        {
+            var sql = @"
+        CREATE TABLE IF NOT EXISTS Incidencia (
+            id_incidencia   INTEGER PRIMARY KEY AUTOINCREMENT,
+            id_vivienda     INTEGER NOT NULL,
+            titulo          TEXT NOT NULL,
+            descripcion     TEXT NOT NULL,
+            fecha           TEXT NOT NULL,
+            estado          TEXT NOT NULL,
+            coste_estimado  REAL NOT NULL,
+            observaciones   TEXT,
+            FOREIGN KEY (id_vivienda) REFERENCES Vivienda(id_vivienda)
+        );
+    ";
 
             using var cmd = connection.CreateCommand();
             cmd.CommandText = sql;
