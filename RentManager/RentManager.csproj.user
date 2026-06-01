@@ -10,6 +10,12 @@
     <Compile Update="Views\ContratosView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\IncidenciaForm.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\IncidenciasView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\InquilinoForm.xaml.cs">
       <SubType>Code</SubType>
     </Compile>

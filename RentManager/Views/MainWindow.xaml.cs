@@ -37,7 +37,7 @@ namespace RentManager
 
         private void BtnIncidencias_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Aquí irá Gestión de Incidencias");
+            MainContent.Content = new IncidenciasView();
         }
 
         private void BtnLogout_Click(object sender, RoutedEventArgs e)
